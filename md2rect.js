@@ -66,10 +66,11 @@ var md2rect = {
         document.querySelectorAll(".box").forEach(function(ele){ ele.style.width = maxBoxWidth + "px"; /*ele.style.height = maxBoxHeight + "px";*/ });
     }
 }
+
 fetch("README.md").then(function(response) {
     return response.text()
 }).then(function(data) {
-    data.split("\r\n").forEach(function(lineContent, lineNum) {
+    data.split("\n").forEach(function(lineContent, lineNum) {
         if (lineContent == "---") {
             md2rect.cmds.cmd = "set-content";
             return;
