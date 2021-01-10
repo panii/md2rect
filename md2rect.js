@@ -18,7 +18,7 @@ var md2rect = {
         bgTip: {}
     },
     boxes: [],
-    newBox: function(_boxTitle) {
+    newBox: function(boxTitleTxt, newLine) {
         var box = document.createElement("div");
         box.className = "box";
         var boxTitle = document.createElement("div");
@@ -27,20 +27,25 @@ var md2rect = {
         var areaWrap = document.createElement("div");
         areaWrap.className = "area-wrap";
         box.appendChild(areaWrap);
-        boxTitle.innerHTML = _boxTitle;
+        boxTitle.innerHTML = boxTitleTxt;
+        if (newLine) {
+            var newLine = document.createElement("div");
+            newLine.style.clear = "both";
+            document.body.appendChild(newLine);
+        }
         document.body.appendChild(box);
         
         return areaWrap;
     },
-    newItems: function(_areaWrap, _areaTitle, _items) {
+    newItems: function(areaWrap, areaTitle, items) {
         var html = [];
-        html.push('<div class="area-title">' + _areaTitle + '</div>');
+        html.push('<div class="area-title">' + areaTitle + '</div>');
         html.push('<div class="area">');
-        _items.forEach(function(_item) {
+        items.forEach(function(_item) {
             html.push('<div class="item" style="background-color:#' + md2rect.settings.bg[_item[0]] + '">' + _item[1] + '</div>');
         })
         html.push('</div>');
-        _areaWrap.innerHTML += html.join("");
+        areaWrap.innerHTML += html.join("");
     },
     render: function() {
         var title = document.createElement("div");
@@ -51,7 +56,7 @@ var md2rect = {
         document.title = md2rect.settings.title;
 
         md2rect.boxes.forEach(function(box) {
-            var areaWrap = md2rect.newBox(box.boxTitle);
+            var areaWrap = md2rect.newBox(box.boxTitle, box.newLine);
             box.areas.forEach(function(area) {
                 md2rect.newItems(areaWrap, area.areaTitle, area.items);
             })
@@ -75,14 +80,18 @@ var md2rect = {
 fetch("README.md").then(function(response) {
     return response.text()
 }).then(function(data) {
-    data.split("\n").forEach(function(lineContent, lineNum) {
+    let newLine = 0;
+    data.split("\n").forEach(function(lineContent) {
+        lineContent = lineContent.trim();
         if (lineContent == "---") {
             md2rect.cmds.cmd = "set-content";
+            newLine++;
             return;
         }
         if (md2rect.cmds.cmd == "set-content") {
             if (lineContent.charAt(0) == "#" && lineContent.charAt(1) == " ") {
-                md2rect.boxes.push({boxTitle: lineContent.split("# ")[1], areas: []});
+                md2rect.boxes.push({boxTitle: lineContent.split("# ")[1], areas: [], newLine: (newLine == 2)});
+                newLine = 0;
                 return;
             }
             if (lineContent.charAt(0) == "#" && lineContent.charAt(1) == "#") {
