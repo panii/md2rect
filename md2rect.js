@@ -1,3 +1,8 @@
+/*!
+ * markdown text parse to rectangle shape diagram
+ * JerryPan - v1.0.0 (2021-01-08)
+ * https://github.com/panii/md2rect | Released under MIT license
+ */
 var md2rect = {
     cmds: {
         cmd: "",
@@ -44,16 +49,7 @@ var md2rect = {
         title.innerHTML = `<h2>${md2rect.settings.title}</h2>`;
         document.body.appendChild(title);
         document.title = md2rect.settings.title;
-        
-        if (Object.keys(md2rect.settings.bgTip).length > 0) {
-            var html = ['<div style="float:left">'];
-            Object.keys(md2rect.settings.bgTip).forEach(function(tipKey) {
-                html.push('<div class="item-small" style="background-color:#' + md2rect.settings.bg[tipKey] + '">' + md2rect.settings.bgTip[tipKey] + '</div>');
-            });
-            html.push('</div>');
-            document.body.innerHTML += html.join("");
-        }
-        
+
         md2rect.boxes.forEach(function(box) {
             var areaWrap = md2rect.newBox(box.boxTitle);
             box.areas.forEach(function(area) {
@@ -64,6 +60,15 @@ var md2rect = {
         var maxBoxHeight = 0;
         document.querySelectorAll(".box").forEach(function(ele){ maxBoxWidth = Math.max(maxBoxWidth, ele.clientWidth); maxBoxHeight = Math.max(maxBoxHeight, ele.clientHeight); });
         document.querySelectorAll(".box").forEach(function(ele){ ele.style.width = maxBoxWidth + "px"; /*ele.style.height = maxBoxHeight + "px";*/ });
+        
+        if (Object.keys(md2rect.settings.bgTip).length > 0) {
+            var html = ['<div style="clear:both;"></div><div style="float:left">'];
+            Object.keys(md2rect.settings.bgTip).forEach(function(tipKey) {
+                html.push('<div class="item-small" style="background-color:#' + md2rect.settings.bg[tipKey] + '">' + md2rect.settings.bgTip[tipKey] + '</div>');
+            });
+            html.push('</div><div style="clear:both;"></div>');
+            document.body.innerHTML += html.join("");
+        }
     }
 }
 
