@@ -1,7 +1,7 @@
 /*!
  * markdown text parse to rectangle shape diagram
  * JerryPan - v1.0.0 (2021-01-08)
- * https://github.com/panii/md2rect | Released under MIT license
+ * https://github.com/panii/md2rect | Released under MIT license 
  */
 var md2rect = {
     cmds: {
