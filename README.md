@@ -79,9 +79,9 @@
 > dynamoDB
 > sphinx
 > ElasticSearch
-> Chrome插件
+> graphQL
 > ssr
-> > docker
+> docker
 > > rabbitMQ
 > > hadoop
 > > hbase
@@ -91,10 +91,10 @@
 > > thinkPHP
 > > swoole
 > > OCR
-> > > vueJS
-> > > angularJS
-> > > tp
-> > > yii
+> > vueJS
+> > angularJS
+> > tp
+> > yii
 > > > hyperf
 > > > NLP
 > > > Solr
@@ -210,3 +210,9 @@
 > 逻辑缜密
 > > > 专注力
 > > > > 熬夜极限40小时
+
+
+
+
+
+
